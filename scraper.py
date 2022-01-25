@@ -18,10 +18,24 @@ def send_request(url: str, payload: dict):
     return response.json()
 
 
-def read_input_data():
+def create_validity_list(result_status: str, validity_list: list):
+    """
+    Create validity list depending on resultStatus in response
+    """
+    if result_status == 'SUCCESS':
+        validity_list.append('Valid')
+    else:
+        validity_list.append('Invalid')
 
+
+def read_input_data():
+    """
+
+    :return:
+    """
     # Read CSV file into DataFrame df
     df = pd.read_csv(file_name)
+    validity_list = []
 
     for i in range(len(df)):
         # Create a row object for each row
@@ -34,12 +48,11 @@ def read_input_data():
             'zip': row_obj.ZIPCode
         }
         response = send_request(usps_url, payload)
-        if response['resultStatus'] == 'SUCCESS':
-            # valid
-            print('valid')
-        else:
-            # invalid
-            print('invalid')
+        create_validity_list(response['resultStatus'], validity_list)
+
+    new_col = pd.DataFrame(validity_list, columns=['Validity'])
+    df['Validity'] = new_col['Validity']
+    print(df)
 
 
 def main():
