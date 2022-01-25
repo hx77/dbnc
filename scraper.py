@@ -1,8 +1,7 @@
 import pandas as pd
 import requests
+import sys
 
-# Change the file name to the input file name
-file_name = "Python Quiz Input - Sheet1.csv"
 usps_url = "https://tools.usps.com/tools/app/ziplookup/zipByAddress"
 
 
@@ -33,7 +32,7 @@ def add_new_col(df, data_list: list, header: str):
     df[header] = new_col[header]
 
 
-def read_input_data():
+def read_input_data(file_name):
     """
 
     :return:
@@ -61,7 +60,12 @@ def read_input_data():
 
 
 def main():
-    read_input_data()
+    print(len(sys.argv))
+    if len(sys.argv) != 2:
+        raise ValueError('Please provide file name.')
+
+    file_name = sys.argv[1]
+    read_input_data(file_name)
 
 
 if __name__ == '__main__':
