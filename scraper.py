@@ -7,7 +7,7 @@ def send_request(payload: dict):
     """
     Send a post request to the USPS API and return JSON object of the result
     """
-    url = "https://tools.usps.com/tools/app/ziplookup/zipByAddress"
+    url = 'https://tools.usps.com/tools/app/ziplookup/zipByAddress'
     headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) '
                       'AppleWebKit/537.36 (KHTML, like Gecko) '
@@ -65,6 +65,7 @@ def read_input_data(file_name):
     add_new_col(df, validity_list, 'Validity')
     # Save DataFrame to the original csv file
     df.to_csv(file_name, index=False)
+    print('A new column added!\n')
 
 
 def main():
